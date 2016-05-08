@@ -27,7 +27,6 @@ namespace MCam
         const bool F = false;
         const bool T = true;
         public int fps = 30;
-        public string bitrate = "300K";
         public Menu1()
         {
             InitializeComponent();
@@ -62,7 +61,7 @@ namespace MCam
             {
                 coreCount += int.Parse(item["NumberOfCores"].ToString());
             }
-            string cmd = "ffmpeg -y -f gdigrab -draw_mouse "+ Convert.ToString(Convert.ToInt32(checkBox1.Checked)) + " -framerate " + fps + " -offset_x " + Form1.ffOffX + " -offset_y " + Form1.ffOffY + " -video_size " + Form1.ffWidth +"x" + Form1.ffHeight + " -i desktop -pix_fmt +yuv420p -b:v "+ bitrate +" -threads "+ coreCount + " \"" + returnpath() + "\"";
+            string cmd = "ffmpeg -y -f gdigrab -draw_mouse "+ Convert.ToString(Convert.ToInt32(checkBox1.Checked)) + " -framerate " + fps + " -offset_x " + Form1.ffOffX + " -offset_y " + Form1.ffOffY + " -video_size " + Form1.ffWidth +"x" + Form1.ffHeight + " -i desktop -pix_fmt +yuv420p -b:v "+ textBox2.Text +" -threads "+ coreCount + " \"" + returnpath() + "\"";
             Console.WriteLine(cmd);
             startInfo.Arguments = "/C " + cmd;
             startInfo.UseShellExecute = true;
@@ -113,10 +112,6 @@ namespace MCam
             try { fps = Convert.ToInt32(textBox1.Text); }
             catch (System.FormatException) { textBox1.Text = bf;};
             bf = textBox1.Text;
-        }
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-            bitrate = textBox1.Text;
         }
 
         public class ScalePos
