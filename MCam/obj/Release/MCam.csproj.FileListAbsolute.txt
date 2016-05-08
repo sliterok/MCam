@@ -28,3 +28,13 @@ C:\Users\Win7\Source\Repos\MCam\WindowsFormsApplication2\obj\Release\MCam.Form1.
 C:\Users\Win7\Source\Repos\MCam\WindowsFormsApplication2\obj\Release\WindowsFormsApplication2.Menu1.resources
 C:\Users\Win7\Source\Repos\MCam\WindowsFormsApplication2\obj\Release\MCam.Properties.Resources.resources
 C:\Users\Win7\Source\Repos\MCam\WindowsFormsApplication2\obj\Release\MCam.csproj.GenerateResource.Cache
+D:\Games\Git\MCam\MCam\bin\Release\MCam.exe.config
+D:\Games\Git\MCam\MCam\obj\Release\MCam.exe
+D:\Games\Git\MCam\MCam\obj\Release\MCam.pdb
+D:\Games\Git\MCam\MCam\bin\Release\MCam.exe
+D:\Games\Git\MCam\MCam\bin\Release\MCam.pdb
+D:\Games\Git\MCam\MCam\obj\Release\MCam.csprojResolveAssemblyReference.cache
+D:\Games\Git\MCam\MCam\obj\Release\MCam.Form1.resources
+D:\Games\Git\MCam\MCam\obj\Release\MCam.Menu1.resources
+D:\Games\Git\MCam\MCam\obj\Release\MCam.Properties.Resources.resources
+D:\Games\Git\MCam\MCam\obj\Release\MCam.csproj.GenerateResource.Cache
