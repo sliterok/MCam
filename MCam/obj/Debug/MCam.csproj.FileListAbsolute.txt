@@ -1,0 +1,32 @@
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\WindowsFormsApplication2\bin\Debug\WindowsFormsApplication2.exe.config
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.exe
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.pdb
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\WindowsFormsApplication2\bin\Debug\WindowsFormsApplication2.exe
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\WindowsFormsApplication2\bin\Debug\WindowsFormsApplication2.pdb
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.Form1.resources
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.Menu1.resources
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.Properties.Resources.resources
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\MCam.csproj.GenerateResource.Cache
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\Mcam\WindowsFormsApplication2\obj\Debug\MCam.csprojResolveAssemblyReference.cache
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\Mcam\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.Menu1.resources
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\Mcam\WindowsFormsApplication2\obj\Debug\MCam.csproj.GenerateResource.Cache
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\Mcam\WindowsFormsApplication2\bin\Debug\MCam.exe.config
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\Mcam\WindowsFormsApplication2\bin\Debug\MCam.exe
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\Mcam\WindowsFormsApplication2\bin\Debug\MCam.pdb
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\Mcam\WindowsFormsApplication2\obj\Debug\MCam.Form1.resources
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\Mcam\WindowsFormsApplication2\obj\Debug\MCam.Properties.Resources.resources
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\Mcam\WindowsFormsApplication2\obj\Debug\MCam.exe
+C:\Users\Win7\Documents\Visual Studio 2015\Projects\WindowsFormsApplication2\Mcam\WindowsFormsApplication2\obj\Debug\MCam.pdb
+C:\Users\Win7\Source\Repos\MCam\WindowsFormsApplication2\bin\Debug\MCam.exe.config
+C:\Users\Win7\Source\Repos\MCam\WindowsFormsApplication2\obj\Debug\MCam.exe
+C:\Users\Win7\Source\Repos\MCam\WindowsFormsApplication2\obj\Debug\MCam.pdb
+C:\Users\Win7\Source\Repos\MCam\WindowsFormsApplication2\bin\Debug\MCam.exe
+C:\Users\Win7\Source\Repos\MCam\WindowsFormsApplication2\bin\Debug\MCam.pdb
+C:\Users\Win7\Source\Repos\MCam\WindowsFormsApplication2\obj\Debug\MCam.csprojResolveAssemblyReference.cache
+C:\Users\Win7\Source\Repos\MCam\WindowsFormsApplication2\obj\Debug\MCam.Form1.resources
+C:\Users\Win7\Source\Repos\MCam\WindowsFormsApplication2\obj\Debug\MCam.Properties.Resources.resources
+C:\Users\Win7\Source\Repos\MCam\WindowsFormsApplication2\obj\Debug\MCam.csproj.GenerateResource.Cache
+C:\Users\Win7\Source\Repos\MCam\WindowsFormsApplication2\obj\Debug\MCam.Menu1.resources
+C:\Users\Win7\Source\Repos\MCam\MCam\bin\Debug\MCam.exe.config
+C:\Users\Win7\Source\Repos\MCam\MCam\obj\Debug\MCam.exe
+C:\Users\Win7\Source\Repos\MCam\MCam\obj\Debug\MCam.pdb
