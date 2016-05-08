@@ -30,3 +30,13 @@ C:\Users\Win7\Source\Repos\MCam\WindowsFormsApplication2\obj\Debug\MCam.Menu1.re
 C:\Users\Win7\Source\Repos\MCam\MCam\bin\Debug\MCam.exe.config
 C:\Users\Win7\Source\Repos\MCam\MCam\obj\Debug\MCam.exe
 C:\Users\Win7\Source\Repos\MCam\MCam\obj\Debug\MCam.pdb
+D:\Games\Git\MCam\MCam\bin\Debug\MCam.exe.config
+D:\Games\Git\MCam\MCam\obj\Debug\MCam.exe
+D:\Games\Git\MCam\MCam\obj\Debug\MCam.pdb
+D:\Games\Git\MCam\MCam\bin\Debug\MCam.exe
+D:\Games\Git\MCam\MCam\bin\Debug\MCam.pdb
+D:\Games\Git\MCam\MCam\obj\Debug\MCam.csprojResolveAssemblyReference.cache
+D:\Games\Git\MCam\MCam\obj\Debug\MCam.Form1.resources
+D:\Games\Git\MCam\MCam\obj\Debug\MCam.Menu1.resources
+D:\Games\Git\MCam\MCam\obj\Debug\MCam.Properties.Resources.resources
+D:\Games\Git\MCam\MCam\obj\Debug\MCam.csproj.GenerateResource.Cache
