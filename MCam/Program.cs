@@ -15,8 +15,6 @@ namespace MCam
         public 
         static void Main()
         {
-            Form1.ffHeight = "";
-            Form1.ffWidth = "";
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Menu1());

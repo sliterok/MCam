@@ -46,7 +46,7 @@ namespace MCam
             startInfo.FileName = "cmd.exe";
             int coreCount = 0;
             foreach (var item in new System.Management.ManagementObjectSearcher("Select * from Win32_Processor").Get()){ coreCount += int.Parse(item["NumberOfCores"].ToString()); }
-            if (Form1.ffHeight == "" || Form1.ffWidth == "") { Form1.ffOffX = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.X); Form1.ffOffY = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Y); Form1.ffHeight = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height); Form1.ffWidth = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width); };
+            if (String.IsNullOrEmpty(Form1.ffHeight) || String.IsNullOrEmpty(Form1.ffWidth)) { Form1.ffOffX = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.X); Form1.ffOffY = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Y); Form1.ffHeight = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height); Form1.ffWidth = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width); };
             string cmd = "ffmpeg -y -f gdigrab -draw_mouse "+ Convert.ToString(Convert.ToInt32(checkBox1.Checked)) + " -framerate " + fps + " -offset_x " + Form1.ffOffX + " -offset_y " + Form1.ffOffY + " -video_size " + Form1.ffWidth +"x" + Form1.ffHeight + " -i desktop -pix_fmt +yuv420p -b:v "+ textBox2.Text +" -threads "+ coreCount + " \"" + returnpath() + "\"";
             Console.WriteLine(cmd);
             startInfo.Arguments = "/C " + cmd;
