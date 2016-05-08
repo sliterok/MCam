@@ -51,14 +51,11 @@ namespace MCam
             process.StartInfo.FileName = "cmd.exe";
             process.StartInfo.Arguments = "/C mode con cols=76 lines=20 & " + cmd;
             Console.WriteLine(process.StartInfo.Arguments);
-            //startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardError = true;
             process.StartInfo.RedirectStandardInput = true;
             process.StartInfo.CreateNoWindow = true;
-            
-            //* Start process and handlers
             process.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
             process.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler);
             process.Start();
@@ -67,11 +64,9 @@ namespace MCam
             process.BeginErrorReadLine();
             int procidint = process.Id;
             string procid = procidint.ToString();
-            //* PostMessage(process.MainWindowHandle, 0x0101, 0x59, 0);
             pid = process.Id;
             pname = process.ProcessName;
             Goto=T; RecordCheck();
-            //this.WindowState = FormWindowState.Minimized;
         }
         private void OutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
         {
@@ -89,8 +84,6 @@ namespace MCam
         }
 
         private void button2_Click(object sender, EventArgs e) {
-            //*CreateProc().WriteLine("q");
-            //*PostMessage(CreateProc().MainWindowHandle, 0x0100, 0x51, 0); //*.MainWindowHandle
             try
             {
                 System.Diagnostics.Process process = System.Diagnostics.Process.GetProcessById(pid);
