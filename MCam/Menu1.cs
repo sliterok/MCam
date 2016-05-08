@@ -61,7 +61,7 @@ namespace MCam
             {
                 coreCount += int.Parse(item["NumberOfCores"].ToString());
             }
-            string cmd = "ffmpeg -y -f gdigrab -framerate " + fps + " -offset_x " + Form1.ffOffX + " -offset_y " + Form1.ffOffY + " -video_size " + Form1.ffHeight +"x" + Form1.ffWidth + " -i desktop -pix_fmt +yuv420p -threads "+ coreCount + " \"" + returnpath() + "\"";
+            string cmd = "ffmpeg -y -f gdigrab -draw_mouse "+ Convert.ToString(Convert.ToInt32(checkBox1.Checked)) + " -framerate " + fps + " -offset_x " + Form1.ffOffX + " -offset_y " + Form1.ffOffY + " -video_size " + Form1.ffHeight +"x" + Form1.ffWidth + " -i desktop -pix_fmt +yuv420p -threads "+ coreCount + " \"" + returnpath() + "\"";
             Console.WriteLine(cmd);
             startInfo.Arguments = "/C " + cmd;
             startInfo.UseShellExecute = true;
@@ -156,6 +156,9 @@ namespace MCam
             base.WndProc(ref m);
         }
 
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
 
+        }
     }
 }
