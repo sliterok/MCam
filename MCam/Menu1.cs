@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace MCam
 {
@@ -36,30 +38,50 @@ namespace MCam
         {
             CreateProc();
         }
+        public StreamWriter sw;
         public void CreateProc()
         {
-            //Form1.ffHeight
             if (returnpath() == "") {saveFileDialog1.ShowDialog();};
             if (returnpath() == "") {return;};
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            startInfo.FileName = "cmd.exe";
             int coreCount = 0;
             foreach (var item in new System.Management.ManagementObjectSearcher("Select * from Win32_Processor").Get()){ coreCount += int.Parse(item["NumberOfCores"].ToString()); }
             if (String.IsNullOrEmpty(Form1.ffHeight) || String.IsNullOrEmpty(Form1.ffWidth)) { Form1.ffOffX = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.X); Form1.ffOffY = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Y); Form1.ffHeight = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height); Form1.ffWidth = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width); };
             string cmd = "ffmpeg -y -f gdigrab -draw_mouse "+ Convert.ToString(Convert.ToInt32(checkBox1.Checked)) + " -framerate " + fps + " -offset_x " + Form1.ffOffX + " -offset_y " + Form1.ffOffY + " -video_size " + Form1.ffWidth +"x" + Form1.ffHeight + " -i desktop -pix_fmt +yuv420p -b:v "+ textBox2.Text +" -threads "+ coreCount + " \"" + returnpath() + "\"";
-            Console.WriteLine(cmd);
-            startInfo.Arguments = "/C " + cmd;
-            startInfo.UseShellExecute = true;
-            process.StartInfo = startInfo;
+            Process process = new Process();
+            process.StartInfo.FileName = "cmd.exe";
+            process.StartInfo.Arguments = "/C mode con cols=76 lines=20 & " + cmd;
+            Console.WriteLine(process.StartInfo.Arguments);
+            //startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.RedirectStandardInput = true;
+            process.StartInfo.CreateNoWindow = true;
+            
             //* Start process and handlers
+            process.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
+            process.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler);
             process.Start();
+            sw = process.StandardInput;
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
             int procidint = process.Id;
             string procid = procidint.ToString();
             //* PostMessage(process.MainWindowHandle, 0x0101, 0x59, 0);
             pid = process.Id;
             pname = process.ProcessName;
             Goto=T; RecordCheck();
+            //this.WindowState = FormWindowState.Minimized;
+        }
+        private void OutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
+        {
+            //* Do your stuff with the output (write to console/log/StringBuilder)
+            Console.WriteLine(outLine.Data);
+            CheckForIllegalCrossThreadCalls = false;
+            try {
+                textBox3.AppendText(outLine.Data + Environment.NewLine);
+            }
+            catch (NullReferenceException) { }
         }
         private void button1_Click_1(object sender, EventArgs e)
         {
@@ -72,11 +94,10 @@ namespace MCam
             try
             {
                 System.Diagnostics.Process process = System.Diagnostics.Process.GetProcessById(pid);
-                PostMessage(process.MainWindowHandle, 0x0100, 0x51, 0);
-                PostMessage(process.MainWindowHandle, 0x0101, 0x51, 0);
-                pid=0;Goto=F;label1.Visible=F;
+                sw.Write("q");
             }
-            catch (System.ArgumentException) {pid = 0;Goto=F;};
+            catch (System.ArgumentException) { pid = 0;Goto=F;}
+            catch (System.NullReferenceException) { pid = 0; Goto = F; }
         }
 
         async Task RecordCheck()
@@ -99,12 +120,6 @@ namespace MCam
             catch (System.FormatException) { textBox1.Text = bf;};
             bf = textBox1.Text;
         }
-
-        public class ScalePos
-        {
-            public float Health = 100.0f;
-        }
-
         private void button3_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -115,6 +130,13 @@ namespace MCam
 
         private void button4_Click(object sender, EventArgs e)
         {
+                        try
+            {
+                System.Diagnostics.Process process = System.Diagnostics.Process.GetProcessById(pid);
+                sw.Write("q");
+            }
+            catch (System.ArgumentException) { pid = 0;Goto=F;}
+            catch (System.NullReferenceException) { pid = 0; Goto = F; }
             this.Close();
         }
 
@@ -138,6 +160,10 @@ namespace MCam
                     return;
             }
             base.WndProc(ref m);
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
         }
     }
 }

@@ -42,17 +42,19 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // start
             // 
-            this.start.BackColor = System.Drawing.SystemColors.Menu;
+            this.start.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.start.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.start.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.start.Location = new System.Drawing.Point(579, 325);
+            this.start.Location = new System.Drawing.Point(579, 354);
             this.start.Name = "start";
             this.start.Size = new System.Drawing.Size(75, 23);
             this.start.TabIndex = 0;
-            this.start.Text = "Start record";
+            this.start.Text = "Start!";
             this.start.UseVisualStyleBackColor = false;
             this.start.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -65,22 +67,27 @@
             // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.Color.GreenYellow;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.ForeColor = System.Drawing.SystemColors.MenuText;
             this.button1.Location = new System.Drawing.Point(12, 354);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 2;
             this.button1.Text = "Save to...";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(579, 354);
+            this.button2.BackColor = System.Drawing.Color.Red;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Location = new System.Drawing.Point(498, 354);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 3;
             this.button2.Text = "Stop!";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label1
@@ -106,22 +113,28 @@
             // 
             // textBox1
             // 
+            this.textBox1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.ForeColor = System.Drawing.Color.GreenYellow;
             this.textBox1.Location = new System.Drawing.Point(12, 43);
             this.textBox1.MaxLength = 3;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.Size = new System.Drawing.Size(100, 13);
             this.textBox1.TabIndex = 5;
             this.textBox1.Text = "30";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(427, 354);
+            this.button3.BackColor = System.Drawing.Color.GreenYellow;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.button3.Location = new System.Drawing.Point(93, 354);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(146, 23);
             this.button3.TabIndex = 7;
-            this.button3.Text = "Select recording region";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Text = "Select recording region...";
+            this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
@@ -155,20 +168,24 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox1.Location = new System.Drawing.Point(12, 81);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(91, 17);
+            this.checkBox1.Size = new System.Drawing.Size(88, 17);
             this.checkBox1.TabIndex = 10;
             this.checkBox1.Text = "Draw mouse?";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // textBox2
             // 
+            this.textBox2.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox2.ForeColor = System.Drawing.Color.GreenYellow;
             this.textBox2.HideSelection = false;
             this.textBox2.Location = new System.Drawing.Point(118, 43);
             this.textBox2.MaxLength = 8;
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
+            this.textBox2.Size = new System.Drawing.Size(100, 13);
             this.textBox2.TabIndex = 11;
             this.textBox2.Text = "300K";
             // 
@@ -181,12 +198,27 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Bitrate";
             // 
+            // textBox3
+            // 
+            this.textBox3.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox3.ForeColor = System.Drawing.Color.GreenYellow;
+            this.textBox3.Location = new System.Drawing.Point(118, 69);
+            this.textBox3.Multiline = true;
+            this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
+            this.textBox3.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox3.Size = new System.Drawing.Size(536, 281);
+            this.textBox3.TabIndex = 12;
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            // 
             // Menu1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(666, 389);
+            this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.button5);
@@ -225,6 +257,7 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBox3;
     }
 }
 
