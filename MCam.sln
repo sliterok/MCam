@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCam", "WindowsFormsApplication2\MCam.csproj", "{6EAE43A8-1030-448B-8157-3729454B1F88}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCam", "MCam\MCam.csproj", "{6EAE43A8-1030-448B-8157-3729454B1F88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
