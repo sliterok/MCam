@@ -62,7 +62,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScreenShot.cs" />
     <EmbeddedResource Include="Form1.resx" />
     <EmbeddedResource Include="Menu1.resx">
       <DependentUpon>Menu1.cs</DependentUpon>

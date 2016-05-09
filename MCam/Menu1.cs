@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace MCam
 {
@@ -45,7 +47,7 @@ namespace MCam
             if (returnpath() == "") {return;};
             int coreCount = 0;
             foreach (var item in new System.Management.ManagementObjectSearcher("Select * from Win32_Processor").Get()){ coreCount += int.Parse(item["NumberOfCores"].ToString()); }
-            if (String.IsNullOrEmpty(Form1.ffHeight) || String.IsNullOrEmpty(Form1.ffWidth)) { Form1.ffOffX = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.X); Form1.ffOffY = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Y); Form1.ffHeight = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height); Form1.ffWidth = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width); };
+            if (String.IsNullOrEmpty(Form1.ffHeight) || String.IsNullOrEmpty(Form1.ffWidth) || Form1.ffHeight == "0" || Form1.ffWidth == "0") { Form1.ffOffX = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.X); Form1.ffOffY = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Y); Form1.ffHeight = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height); Form1.ffWidth = Convert.ToString(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width); };
             string cmd = "ffmpeg -y -f gdigrab -draw_mouse "+ Convert.ToString(Convert.ToInt32(checkBox1.Checked)) + " -framerate " + fps + " -offset_x " + Form1.ffOffX + " -offset_y " + Form1.ffOffY + " -video_size " + Form1.ffWidth +"x" + Form1.ffHeight + " -i desktop -pix_fmt +yuv420p -b:v "+ textBox2.Text +" -threads "+ coreCount + " \"" + returnpath() + "\"";
             Process process = new Process();
             process.StartInfo.FileName = "cmd.exe";
@@ -66,7 +68,8 @@ namespace MCam
             string procid = procidint.ToString();
             pid = process.Id;
             pname = process.ProcessName;
-            Goto=T; RecordCheck();
+            this.WindowState = FormWindowState.Minimized;
+            Goto =T; RecordCheck();
         }
         private void OutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
         {
@@ -78,6 +81,14 @@ namespace MCam
             }
             catch (NullReferenceException) { }
         }
+       // Graphics g;
+       // async Task RecZone()
+      //  {
+      //      var rect = (new Rectangle(Convert.ToInt32(Form1.ffOffX), Convert.ToInt32(Form1.ffOffY), Convert.ToInt32(Form1.ffWidth), Convert.ToInt32(Form1.ffHeight)));
+     //       Pen pen = new Pen(Color.FromArgb(192, 255, 192), 10);
+      //      g.DrawRectangle(pen, rect);
+     //       await Task.Delay(2000);
+    //    }
         private void button1_Click_1(object sender, EventArgs e)
         {
             saveFileDialog1.ShowDialog();
