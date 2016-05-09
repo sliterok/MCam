@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.IO;
 using System.Collections.Generic;
@@ -49,7 +50,6 @@ namespace MCam
         public bool LeftButtonDown = false;
         public bool RectangleDrawn = false;
         public bool ReadyToDrag = false;
-        string ScreenPath;
 
         public Point ClickPoint = new Point();
         public Point CurrentTopLeft = new Point();
@@ -59,21 +59,19 @@ namespace MCam
         public int RectangleHeight = new int();
         public int RectangleWidth = new int();
 
+        public int monwidth = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
+        public int monheight = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
+        public int monX = System.Windows.Forms.Screen.PrimaryScreen.Bounds.X;
+        public int monY = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Y;
+
         Graphics g;
-        Pen MyPen = new Pen(Color.Black, 3);
-        SolidBrush TransparentBrush = new SolidBrush(Color.White);
-        Pen EraserPen = new Pen(Color.FromArgb(192, 255, 192), 3);
-        SolidBrush eraserBrush = new SolidBrush(Color.FromArgb(192, 255, 192));
+        Pen MyPen = new Pen(Color.FromArgb(255, 255, 255), 5);
+        SolidBrush TransparentBrush = new SolidBrush(Color.FromArgb(255, 255, 255));
+        Pen EraserPen = new Pen(Color.FromArgb(255, 255, 255), 5);
+        SolidBrush eraserBrush = new SolidBrush(Color.FromArgb(10, 10, 10));
 
         protected override void OnMouseClick(MouseEventArgs e)
         {
-
-            if (e.Button == MouseButtons.Right)
-            {
-
-                e = null;
-
-            }
 
             base.OnMouseClick(e);
 
@@ -107,99 +105,11 @@ namespace MCam
             this.MouseDoubleClick += new MouseEventHandler(mouse_DClick);
             this.MouseUp += new MouseEventHandler(mouse_Up);
             this.MouseMove += new MouseEventHandler(mouse_Move);
-            this.KeyUp += new KeyEventHandler(key_press);
             g = this.CreateGraphics();
 
         }
         #endregion
-
-
-
-        public void SaveSelection(bool showCursor)
-        {
-
-            Point curPos = new Point(Cursor.Position.X - CurrentTopLeft.X, Cursor.Position.Y - CurrentTopLeft.Y);
-            Size curSize = new Size();
-            curSize.Height = Cursor.Current.Size.Height;
-            curSize.Width = Cursor.Current.Size.Width;
-
-            ScreenPath = "";
-
-            if (!ScreenShot.saveToClipboard)
-            {
-
-                saveFileDialog1.DefaultExt = "bmp";
-                saveFileDialog1.Filter = "bmp files (*.bmp)|*.bmp|jpg files (*.jpg)|*.jpg|gif files (*.gif)|*.gif|tiff files (*.tiff)|*.tiff|png files (*.png)|*.png";
-                saveFileDialog1.Title = "Save screenshot to...";
-                saveFileDialog1.ShowDialog();
-                ScreenPath = saveFileDialog1.FileName;
-
-            }
-
-
-            if (ScreenPath != "" || ScreenShot.saveToClipboard)
-            {
-
-                //Allow 250 milliseconds for the screen to repaint itself (we don't want to include this form in the capture)
-                System.Threading.Thread.Sleep(250);
-
-                Point StartPoint = new Point(CurrentTopLeft.X, CurrentTopLeft.Y);
-                Rectangle bounds = new Rectangle(CurrentTopLeft.X, CurrentTopLeft.Y, CurrentBottomRight.X - CurrentTopLeft.X, CurrentBottomRight.Y - CurrentTopLeft.Y);
-                string fi = "";
-
-                if (ScreenPath != "")
-                {
-
-                    fi = new FileInfo(ScreenPath).Extension;
-
-                }
-
-                ScreenShot.CaptureImage(showCursor, curSize, curPos, StartPoint, Point.Empty, bounds, ScreenPath, fi);
-
-
-                if (ScreenShot.saveToClipboard)
-                {
-
-                    MessageBox.Show("Area saved to clipboard", "TeboScreen", MessageBoxButtons.OK);
-
-                }
-                else
-                {
-
-                    MessageBox.Show("Area saved to file", "TeboScreen", MessageBoxButtons.OK);
-
-                }
-
-
-                this.InstanceRef.Show();
-                this.Close();
-
-            }
-
-            else
-            {
-
-                MessageBox.Show("File save cancelled", "TeboScreen", MessageBoxButtons.OK);
-                this.InstanceRef.Show();
-                this.Close();
-
-            }
-
-        }
-
-
-
-        public void key_press(object sender, KeyEventArgs e)
-        {
-
-            if (e.KeyCode.ToString() == "S" && (RectangleDrawn && (CursorPosition() == CursPos.WithinSelectionArea || CursorPosition() == CursPos.OutsideSelectionArea)))
-            {
-
-                SaveSelection(true);
-
-            }
-
-        }
+        
 
         #region:::::::::::::::::::::::::::::::::::::::::::Mouse Buttons:::::::::::::::::::::::::::::::::::::::::::
         public static string ffOffX;
@@ -272,6 +182,7 @@ namespace MCam
             {
 
                 CursorPosition();
+                if (LeftButtonDown && CursorPosition() == CursPos.OutsideSelectionArea) { DrawSelection(); }
 
                 if (CurrentAction == ClickAction.Dragging)
                 {
@@ -360,7 +271,7 @@ namespace MCam
 
             }
 
-            this.Cursor = Cursors.No;
+            this.Cursor = Cursors.Arrow;
             return CursPos.OutsideSelectionArea;
         }
 
@@ -402,6 +313,12 @@ namespace MCam
             }
 
         }
+        public Region rgn()
+        {
+            var rgn = new Region(new Rectangle(monX, monY, monwidth, monheight));
+            return rgn;
+        }
+
 
         private void ResizeSelection()
         {
@@ -413,10 +330,11 @@ namespace MCam
                 {
 
                     //Erase the previous rectangle
-                    g.DrawRectangle(EraserPen, CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
+                    var Rect = new Rectangle(CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
+                    var path = new GraphicsPath(); path.AddRectangle(Rect);
+                    var wa = new Region(); wa = rgn(); wa.Exclude(path); g.FillRegion(eraserBrush, wa); g.FillRectangle(TransparentBrush, Rect);
                     CurrentTopLeft.X = Cursor.Position.X;
                     RectangleWidth = CurrentBottomRight.X - CurrentTopLeft.X;
-                    g.DrawRectangle(MyPen, CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
 
                 }
 
@@ -428,12 +346,13 @@ namespace MCam
                 {
 
                     //Erase the previous rectangle
-                    g.DrawRectangle(EraserPen, CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
+                    var Rect = new Rectangle(CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
+                    var path = new GraphicsPath(); path.AddRectangle(Rect);
+                    var wa = new Region(); wa = rgn(); wa.Exclude(path); g.FillRegion(eraserBrush, wa); g.FillRectangle(TransparentBrush, Rect);
                     CurrentTopLeft.X = Cursor.Position.X;
                     CurrentTopLeft.Y = Cursor.Position.Y;
                     RectangleWidth = CurrentBottomRight.X - CurrentTopLeft.X;
                     RectangleHeight = CurrentBottomRight.Y - CurrentTopLeft.Y;
-                    g.DrawRectangle(MyPen, CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
 
                 }
             }
@@ -444,12 +363,13 @@ namespace MCam
                 {
 
                     //Erase the previous rectangle
-                    g.DrawRectangle(EraserPen, CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
+                    var Rect = new Rectangle(CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
+                    var path = new GraphicsPath(); path.AddRectangle(Rect);
+                    var wa = new Region(); wa = rgn(); wa.Exclude(path); g.FillRegion(eraserBrush, wa); g.FillRectangle(TransparentBrush, Rect);
                     CurrentTopLeft.X = Cursor.Position.X;
                     CurrentBottomRight.Y = Cursor.Position.Y;
                     RectangleWidth = CurrentBottomRight.X - CurrentTopLeft.X;
                     RectangleHeight = CurrentBottomRight.Y - CurrentTopLeft.Y;
-                    g.DrawRectangle(MyPen, CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
 
                 }
 
@@ -461,10 +381,11 @@ namespace MCam
                 {
 
                     //Erase the previous rectangle
-                    g.DrawRectangle(EraserPen, CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
+                    var Rect = new Rectangle(CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
+                    var path = new GraphicsPath(); path.AddRectangle(Rect);
+                    var wa = new Region(); wa = rgn(); wa.Exclude(path); g.FillRegion(eraserBrush, wa); g.FillRectangle(TransparentBrush, Rect);
                     CurrentBottomRight.X = Cursor.Position.X;
                     RectangleWidth = CurrentBottomRight.X - CurrentTopLeft.X;
-                    g.DrawRectangle(MyPen, CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
 
                 }
             }
@@ -475,12 +396,13 @@ namespace MCam
                 {
 
                     //Erase the previous rectangle
-                    g.DrawRectangle(EraserPen, CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
+                    var Rect = new Rectangle(CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
+                    var path = new GraphicsPath(); path.AddRectangle(Rect);
+                    var wa = new Region(); wa = rgn(); wa.Exclude(path); g.FillRegion(eraserBrush, wa); g.FillRectangle(TransparentBrush, Rect);
                     CurrentBottomRight.X = Cursor.Position.X;
                     CurrentTopLeft.Y = Cursor.Position.Y;
                     RectangleWidth = CurrentBottomRight.X - CurrentTopLeft.X;
                     RectangleHeight = CurrentBottomRight.Y - CurrentTopLeft.Y;
-                    g.DrawRectangle(MyPen, CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
 
                 }
             }
@@ -491,12 +413,13 @@ namespace MCam
                 {
 
                     //Erase the previous rectangle
-                    g.DrawRectangle(EraserPen, CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
+                    var Rect = new Rectangle(CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
+                    var path = new GraphicsPath(); path.AddRectangle(Rect);
+                    var wa = new Region(); wa = rgn(); wa.Exclude(path); g.FillRegion(eraserBrush, wa); g.FillRectangle(TransparentBrush, Rect);
                     CurrentBottomRight.X = Cursor.Position.X;
                     CurrentBottomRight.Y = Cursor.Position.Y;
                     RectangleWidth = CurrentBottomRight.X - CurrentTopLeft.X;
                     RectangleHeight = CurrentBottomRight.Y - CurrentTopLeft.Y;
-                    g.DrawRectangle(MyPen, CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
 
                 }
             }
@@ -507,10 +430,11 @@ namespace MCam
                 {
 
                     //Erase the previous rectangle
-                    g.DrawRectangle(EraserPen, CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
+                    var Rect = new Rectangle(CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
+                    var path = new GraphicsPath(); path.AddRectangle(Rect);
+                    var wa = new Region(); wa = rgn(); wa.Exclude(path); g.FillRegion(eraserBrush, wa); g.FillRectangle(TransparentBrush, Rect);
                     CurrentTopLeft.Y = Cursor.Position.Y;
                     RectangleHeight = CurrentBottomRight.Y - CurrentTopLeft.Y;
-                    g.DrawRectangle(MyPen, CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
 
                 }
             }
@@ -521,10 +445,11 @@ namespace MCam
                 {
 
                     //Erase the previous rectangle
-                    g.DrawRectangle(EraserPen, CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
+                    var Rect = new Rectangle(CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
+                    var path = new GraphicsPath(); path.AddRectangle(Rect);
+                    var wa = new Region(); wa = rgn(); wa.Exclude(path); g.FillRegion(eraserBrush, wa); g.FillRectangle(TransparentBrush, Rect);
                     CurrentBottomRight.Y = Cursor.Position.Y;
                     RectangleHeight = CurrentBottomRight.Y - CurrentTopLeft.Y;
-                    g.DrawRectangle(MyPen, CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
 
                 }
 
@@ -537,7 +462,10 @@ namespace MCam
             //Ensure that the rectangle stays within the bounds of the screen
 
             //Erase the previous rectangle
-            g.DrawRectangle(EraserPen, CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
+            var Rect = new Rectangle(CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
+            var path = new GraphicsPath(); path.AddRectangle(Rect);
+            var wa = new Region(); wa = rgn(); wa.Exclude(path); g.FillRegion(eraserBrush, wa); g.FillRectangle(TransparentBrush, Rect);
+
 
             if (Cursor.Position.X - DragClickRelative.X > 0 && Cursor.Position.X - DragClickRelative.X + RectangleWidth < System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width)
             {
@@ -589,9 +517,6 @@ namespace MCam
 
             }
 
-            //Draw a new rectangle
-            g.DrawRectangle(MyPen, CurrentTopLeft.X, CurrentTopLeft.Y, RectangleWidth, RectangleHeight);
-
         }
 
         private void DrawSelection()
@@ -600,7 +525,9 @@ namespace MCam
             this.Cursor = Cursors.Arrow;
 
             //Erase the previous rectangle
-            g.DrawRectangle(EraserPen, CurrentTopLeft.X, CurrentTopLeft.Y, CurrentBottomRight.X - CurrentTopLeft.X, CurrentBottomRight.Y - CurrentTopLeft.Y);
+            var Rect = new Rectangle(CurrentTopLeft.X, CurrentTopLeft.Y, CurrentBottomRight.X - CurrentTopLeft.X, CurrentBottomRight.Y - CurrentTopLeft.Y);
+            var path = new GraphicsPath(); path.AddRectangle(Rect);
+            var wa = new Region(); wa = rgn(); wa.Exclude(path); g.FillRegion(eraserBrush, wa); g.FillRectangle(TransparentBrush, Rect);
 
             //Calculate X Coordinates
             if (Cursor.Position.X < ClickPoint.X)
@@ -633,9 +560,6 @@ namespace MCam
                 CurrentBottomRight.Y = Cursor.Position.Y;
 
             }
-
-            //Draw a new rectangle
-            g.DrawRectangle(MyPen, CurrentTopLeft.X, CurrentTopLeft.Y, CurrentBottomRight.X - CurrentTopLeft.X, CurrentBottomRight.Y - CurrentTopLeft.Y);
 
         }
 
